@@ -648,10 +648,11 @@ _FILL = None
 
 
 def dodecagon_fillings():
-    """(4421, 13, 2) interior vertices of all fillings of a unit-edge 12-gon (relative to its centre)."""
+    """(5827, 13, 2) interior vertices of all fillings of a unit-edge 12-gon (relative to its centre).
+    (The pre-hcss_lambda_star list had 4421 entries, a strict subset of these 5827.)"""
     global _FILL
     if _FILL is None:
-        p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "dodecagon_fillings.npz")
+        p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "dodecagon_fillings_5827.npz")
         _FILL = np.load(p)["interior"]
     return _FILL
 
@@ -663,7 +664,7 @@ def _dodecagon_vertices(L):
 
 def dodeca_cell_points(L, centres, rng):
     """All particles for 12-gons at the given centres: 12-gon vertices (to be de-duplicated by the caller)
-    and the 13 interior vertices of an independently chosen random filling (s_conf >= ln(4421)/19 per particle)."""
+    and the 13 interior vertices of an independently chosen random filling (s_conf >= ln(5827)/19 per particle)."""
     F = dodecagon_fillings()
     V = _dodecagon_vertices(L)
     out_v, out_i = [], []
@@ -684,7 +685,7 @@ def _dedupe_periodic(P, M, tol=1e-6):
 
 def dodeca_state(lam, N_target, scale=1.003, seed=0):
     """Periodic 3.12.12 tiling (12-gons + triangles, all of edge L = lam*scale) with every 12-gon filled by an
-    independent random choice among its 4421 tilings.  19 particles and 14 A + 24 B tiles per 12-gon."""
+    independent random choice among its 5827 tilings.  19 particles and 14 A + 24 B tiles per 12-gon."""
     L = lam * scale
     D = L / math.tan(math.radians(15))            # centre-centre distance of edge-sharing 12-gons
     a1 = np.array([D, 0.0]); a2 = np.array([D / 2, D * math.sqrt(3) / 2])

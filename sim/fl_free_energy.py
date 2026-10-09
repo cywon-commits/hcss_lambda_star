@@ -9,7 +9,7 @@ Steps
      (thermal wavelength = 1; the 1/N! cancels against the N! site permutations).
      The integral is done in x = ln Lam with Gauss-Legendre nodes on [ln Lam_min, ln Lam_max]
      plus Lam_min * <...>_{Lam_min} for the piece below Lam_min.
-  4. beta*g = beta*A/N + beta*P*<v>.  For --kind dodeca the bound is ln(4421)/19 (3.12.12 tiling with independently
+  4. beta*g = beta*A/N + beta*P*<v>.  For --kind dodeca the bound is ln(5827)/19 (3.12.12 tiling with independently
      filled 12-gons).  For --kind hexlat the configurational entropy of the hexagon-flip
      ensemble, ln(2)/3 per particle (exact lower bound for the random tiling), is reported separately:
      beta*g_tiling = beta*g_hexlat - ln(2)/3.
@@ -31,9 +31,18 @@ def block_err(x, nb=10):
     return float(b.std(ddof=1) / math.sqrt(nb))
 
 
+def get_state(a, scale):
+    """(s, box) of the structure with tile edge ~ lam*scale.  kind 'file': ideal tiling from an npz, box rescaled so that the edge is lam*scale."""
+    if a.kind == "file":
+        z = np.load(a.config)
+        return z["s"].copy(), np.asarray(z["box"], float) * (a.lam * scale / (mc.LAM_STAR * (1 + 1e-7)))
+    return mc.lattice_state(a.kind, a.lam, a.N, scale=scale, seed=a.seed)
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--kind", required=True, choices=["A", "B", "hexlat", "rows", "dodeca", "dodeca1", "dodeca1_jam"])
+    ap.add_argument("--kind", required=True, choices=["A", "B", "hexlat", "rows", "dodeca", "dodeca1", "dodeca1_jam", "file"])
+    ap.add_argument("--config", default=None, help="--kind file: npz with s (fractional ideal positions) and box (a, b, c) of an ideal tiling (edge lam*(1+1e-7))")
     ap.add_argument("--lam", type=float, default=1.93)
     ap.add_argument("--T", type=float, default=0.06)
     ap.add_argument("--P", type=float, default=0.735)
@@ -63,11 +72,11 @@ def main():
 
     # ---- 1. NPT
     # start from the thermally expanded lattice  v = v0 + 2T/P  (hard-contact NPT law, pilot-2 check)
-    s_ideal, box1 = mc.lattice_state(a.kind, a.lam, a.N, scale=1.0, seed=a.seed)
+    s_ideal, box1 = get_state(a, 1.0)
     v0 = box1[0] * box1[2] / len(s_ideal)
-    c_exp = a.expand_c if a.expand_c is not None else (0.8 if a.kind.startswith("dodeca") or a.kind == "hexlat" else 1.0)
+    c_exp = a.expand_c if a.expand_c is not None else (0.8 if a.kind.startswith("dodeca") or a.kind in ("hexlat", "file") else 1.0)
     f = math.sqrt(1.0 + c_exp * (2 * a.T / a.P) / v0)
-    s_ideal, box = mc.lattice_state(a.kind, a.lam, a.N, scale=f, seed=a.seed)
+    s_ideal, box = get_state(a, f)
     s = s_ideal.copy(); img = np.zeros((len(s), 2), np.int64); N = len(s)
     n = mc.total_count(s, *box, a.lam)
     dmax, dbox = 0.03, 0.002
@@ -148,7 +157,7 @@ def main():
     I_err = math.sqrt(sum((ws[j] * lams[j] * msd_err[j]) ** 2 for j in range(K)) + (a.lam_min * msd_err[K]) ** 2)
     bA = -math.log(V) - (N - 1) * math.log(math.pi / a.lam_max) + dA1 - I
     bg = bA / N + beta * a.P * v_m
-    out = dict(kind=a.kind, seed=a.seed, lam=a.lam, T=a.T, P=a.P, N=N, npt=npt, npt_structure=npt_structure,
+    out = dict(kind=a.kind, config=a.config, seed=a.seed, lam=a.lam, T=a.T, P=a.P, N=N, npt=npt, npt_structure=npt_structure,
                beta_A_per_N=bA / N, beta_g=bg, beta_g_err=math.hypot(I_err / N, beta * a.P * npt["v_err"]),
                components=dict(minus_lnV_over_N=-math.log(V) / N,
                                einstein_term_over_N=-(N - 1) * math.log(math.pi / a.lam_max) / N,
@@ -160,9 +169,9 @@ def main():
         out["s_conf_lower_bound"] = math.log(2) / 3
         out["beta_g_tiling"] = bg - math.log(2) / 3
     if a.kind in ("dodeca", "dodeca1", "dodeca1_jam"):
-        # independent fillings of each 12-gon of the 3.12.12 tiling: 4421 per 19 particles (exact lower bound)
-        out["s_conf_lower_bound"] = math.log(4421) / 19
-        out["beta_g_tiling"] = bg - math.log(4421) / 19
+        # independent fillings of each 12-gon of the 3.12.12 tiling: 5827 per 19 particles (exact lower bound)
+        out["s_conf_lower_bound"] = math.log(5827) / 19
+        out["beta_g_tiling"] = bg - math.log(5827) / 19
     json.dump(out, open(a.out, "w"), indent=2)
     print(json.dumps({k: out[k] for k in ("kind", "T", "N", "beta_g", "beta_g_err")} | {"h": h}, indent=1))
 

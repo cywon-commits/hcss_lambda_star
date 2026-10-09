@@ -1,7 +1,7 @@
 """
 tiling_mc.py — T -> 0 random-tiling ensemble of the lam* = 2cos15 tiles (A triangles + 30-degree rhombi), uniform weight.
 Moves: (1) 30-degree hexagon flip (hcss_mc.flip_moves, point reflection; acceptance n_old/n_new);
-       (2) 12-gon refill: a regular 12-gon of side lam whose 13 interior vertices form one of the 4421 fillings is
+       (2) 12-gon refill: a regular 12-gon of side lam whose 13 interior vertices form one of the 5827 fillings is
            refilled with a uniformly chosen filling; acceptance n_old/n_new (number of such 12-gons).
 Positions are ideal (edge lam*(1+1e-7)); no vibrations.
 Flips use beta = 1e3: valid tiling flips have dU = 0 and are unaffected, while flips of hexagon-like but non-tiling
@@ -14,7 +14,7 @@ import hcss_mc as mc
 from scipy.spatial import cKDTree
 
 LS = mc.LAM_STAR
-F = mc.dodecagon_fillings()                       # (4421, 13, 2), unit edge, relative to centre
+F = mc.dodecagon_fillings()                       # (5827, 13, 2), unit edge, relative to centre
 L = LS * (1 + 1e-7)
 R = L / (2 * math.sin(math.radians(15)))          # circumradius
 ANG = np.radians(15 + 30 * np.arange(12))
