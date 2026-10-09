@@ -14,3 +14,6 @@ analysis/*.npz
 analysis/*.npy
 # NOTE: reference/data/*.npz IS tracked (validation baseline, ~1.4 MB)
 tm_cpp/tm_gen
+# crossing-set data committed on purpose (small JSON)
+!analysis/data/dddt_crossing_sets.json.gz
+!analysis/data/ddt_crossing_sets.json.gz
