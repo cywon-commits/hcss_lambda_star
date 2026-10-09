@@ -3,11 +3,12 @@
 # Needs runs/samples/{r12_s1..4,r312_s1..2}.npz (python3 sim/make_samples.py ...).  Output: runs/fe/*.json, logs runs/fe/logs/
 set -euo pipefail
 cd "$(dirname "$0")"
-NPROC=${NPROC:-$(nproc)}; LAM=1.93; OUT=../runs/fe; mkdir -p $OUT/logs
+NPROC=${NPROC:-$(nproc)}; LAM=1.93; OUT=${OUT:-../runs/fe}; EXTRA=${EXTRA:-}; ONLY=${ONLY:-}; mkdir -p $OUT/logs
 jobs=()
 add(){ # name args...
   local name=$1; shift
-  [ -f $OUT/$name.json ] || jobs+=("python3 fl_free_energy.py --sites mean --lam $LAM $* --out $OUT/$name.json > $OUT/logs/$name.log 2>&1")
+  if [ -n "$ONLY" ] && ! grep -qx "$name" "$ONLY"; then return 0; fi
+  [ -f $OUT/$name.json ] || jobs+=("python3 fl_free_energy.py --sites mean --lam $LAM $* $EXTRA --out $OUT/$name.json > $OUT/logs/$name.log 2>&1")
 }
 pt(){ # P T  kinds...
   local P=$1 T=$2; shift 2
@@ -24,6 +25,7 @@ pt(){ # P T  kinds...
     esac
   done
 }
+# Rerun of flagged points with longer NPT:  OUT=../runs/fe_long EXTRA="--npt-sweeps 200000" ONLY=../runs/fe/flagged.txt bash sim/run_task3.sh
 # prediction check first
 pt 0.760 0.06 B931 B1600 dod931 dod1539 r12 r312
 pt 0.770 0.08 B931 B1600 dod931 dod1539 r12 r312
