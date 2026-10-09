@@ -32,6 +32,8 @@ reference/         검증 기준 (수정 금지): Python 참조 구현, 기준 �
 tools/             compare_tm.py (비트 비교), bin2npz.py (C++ 원시 출력 → npz)
 runs/              대형 계산 출력 (git 제외)
 analysis/          이 연구의 계산 스크립트 스냅숏 (INDEX.md 참조)
+analysis/data/dddt_crossing_sets.json.gz   DDDT(3.12.12 삼각형 중심 클러스터) 가로지름 집합 948개와 정확한 채우기 수(합 749,563,960,730), 14 KB. 읽기: analysis/load_crossing_sets.py
+analysis/data/ddt_crossing_sets.json.gz    DDT 가로지름 집합 29개와 채우기 수(합 61,174,241), 0.8 KB. 분류·TASK2b 분석(vclass3x.py 대체: task2b.py)의 입력
 figures/           그림 5장
 ```
 

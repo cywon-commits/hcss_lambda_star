@@ -53,7 +53,8 @@ def ckind(C):
     vac = vac_geo(C); segs = frozenset().union(*[tsegs(t) for t in C]); comp = ''.join(sorted(t[0] for t in C))
     if len(vac) >= 2: k = 'K3 cooperative (>=2 vacated)'
     elif len(vac) == 1:
-        k = 'K1 vertex (one junction, own 3 segments)' if segs <= set(JUNC[vac[0]]) else 'K2 extended single junction'
+        if segs <= set(JUNC[vac[0]]): k = 'K1 vertex (one junction, own 3 segments)'
+        else: k = 'K2n extended single junction (new)' if frozenset(C) not in ICL else 'K2p extended by touching primitives (old: independent)'
     else: k = 'K0 no vacated junction'
     return k, tuple(vac), tuple(sorted(segs)), comp
 setcomps = {}
@@ -81,7 +82,7 @@ for kind in sorted(set(r[0] for r in rows)):
     rr = [r for r in rows if r[0] == kind]; sets = [S for S in R3 if any(CK[C][0] == kind for C in setcomps[S])]
     P('    %-40s orbits %3d components %4d sets %4d fillings %16d  %7.3f%%' % (kind, len(rr), sum(r[5] for r in rr), len(sets), sum(R3[S] for S in sets), 100*sum(R3[S] for S in sets)/tot3))
 # set-level partition by the "highest" component kind present
-order = ['K3 cooperative (>=2 vacated)', 'K2 extended single junction', 'K1 vertex (one junction, own 3 segments)', 'K0 no vacated junction']
+order = ['K3 cooperative (>=2 vacated)', 'K2n extended single junction (new)', 'K2p extended by touching primitives (old: independent)', 'K1 vertex (one junction, own 3 segments)', 'K0 no vacated junction']
 cat = Counter(); catn = Counter()
 for S, n in R3.items():
     ks = set(CK[C][0] for C in setcomps[S]); c = next((o for o in order if o in ks), 'none (unbound)'); cat[c] += 1; catn[c] += n
@@ -94,8 +95,8 @@ oldnot = [S for S in COOP if S not in set(newcoop)]
 P('    old-cooperative sets WITHOUT a true cooperative component (reclassified): %d sets, %d fillings (%.4f%%)' % (len(oldnot), sum(R3[S] for S in oldnot), 100*sum(R3[S] for S in oldnot)/tot3))
 newnotold = [S for S in newcoop if S in ICL]; P('    sets with a K3 component that the old scheme called independent: %d' % len(newnotold))
 # extended single junction
-ext = [r for r in rows if r[0].startswith('K2')]
-P('\n    extended single-junction orbits: %d, members %d' % (len(ext), sum(r[5] for r in ext)))
+ext = [r for r in rows if r[0].startswith('K2n')]
+P('\n    new extended single-junction (K2n) orbits: %d, members %d' % (len(ext), sum(r[5] for r in ext)))
 for r in ext: P('      orbit: vacated %s crossed %s tiles %s (%d) stab %s members %d, sets %d, fillings %d (%.3f%%)' % (','.join(r[1]), '+'.join(r[2]), r[3], r[4], r[6], r[5], r[7], r[8], 100*r[8]/tot3))
 # ---------------- 3. independence of observed components ----------------
 comps = list(CK); N = len(comps)
