@@ -8,13 +8,15 @@ S_RANDOM12, S_RANDOM312 = 0.594, 0.591
 S_DOD_NEW, S_DOD_OLD = math.log(5827)/19, math.log(4421)/19
 def load():
     D = {}
-    for sub in ('fe', 'fe_long'):
+    for sub in ('fe', 'fe_long', 'fe_rr'):   # later directories override earlier ones when the new run is usable
         for f in sorted(glob.glob(os.path.join(ROOT, 'runs', sub, '*.json'))):
             n = os.path.basename(f)[:-5]
             m = re.match(r'(B|A|dodeca|r12|r312)_(?:N(\d+)_)?(?:s(\d+)_)?P([\d.]+)_T([\d.]+)$', n)
             if not m: continue
             d = json.load(open(f)); kind, N, s, P, T = m.groups()
-            d['_src'] = sub; D[n] = dict(kind=kind, Ntag=int(N) if N else None, seed=int(s) if s else None, P=float(P), T=float(T), bg=d['beta_g'], err=d['beta_g_err'],
+            d['_src'] = sub
+            if n in D and not (math.isfinite(d['beta_g']) and d['components']['dA1_overlap_free_fraction'] >= 0.8): continue
+            D[n] = dict(kind=kind, Ntag=int(N) if N else None, seed=int(s) if s else None, P=float(P), T=float(T), bg=d['beta_g'], err=d['beta_g_err'],
                                          drift=d['npt']['drift_v_last_minus_first_half_of_sampling'], free=d['components']['dA1_overlap_free_fraction'], v=d['npt']['v'], N=d['N'], src=sub, npt_h=d['npt']['h'])
     return D
 def good(r): return math.isfinite(r['bg']) and r['free'] >= 0.8
@@ -46,5 +48,33 @@ def main():
         s = lambda t: '%+.3f+-%.3f' % (t[0], 2*t[1]) if t else '    -    '
         P_('(%.3f,%.2f)    | %s %s %s %s %s %s | %s %s %s %s | %s %s' % (P, T, f('B931'), f('B1600'), f('dod931'), f('dod1539'), f('r12'), f('r312'), s(tB12), s(tB312), s(tBd), s(tBdo), s(v12), s(v312)))
     return D, out, lines
-if __name__ == '__main__':
+if __name__ == '__main__' and not (len(sys.argv) > 1 and sys.argv[1] == 'full'):
     main()
+
+
+def details(D):
+    """per-point ensemble statistics (n, mean, sample std, typical FL 1-sigma error) for the random tilings and dodeca references"""
+    print('\nensemble statistics (beta*g per particle; std = sample standard deviation over samples, fl = typical single-run FL 1-sigma error)')
+    pts = sorted({(r['P'], r['T']) for r in D.values()}, key=lambda a: (a[1], a[0]))
+    rows = []
+    for P, T in pts:
+        for k, nt in (('r12', None), ('r312', None), ('dodeca', 931), ('dodeca', 1539), ('B', 931), ('B', 1600), ('A', 931), ('A', 1600)):
+            g = mean_err(pick(D, k, P, T, nt))
+            if g: rows.append((P, T, k + ('' if nt is None else str(nt)), g['n'], g['mean'], g['err'], g['std'], g['fl_err_typ']))
+    for r in rows: print('(%.3f,%.2f) %-9s n=%d mean %.4f  err(1s) %.4f  std %.4f  fl %.4f %s' % (*r, '<-- spread > 2*FL' if r[6] == r[6] and r[6] > 2*r[7] else ''))
+    return rows
+
+
+def full_table(D, path):
+    L = ['| run | source | N | beta*g | 2sigma | overlap-free | NPT volume drift | flag |', '|---|---|---|---|---|---|---|---|']
+    for n, r in sorted(D.items(), key=lambda kv: (kv[1]['T'], kv[1]['P'], kv[0])):
+        fl = []
+        if abs(r['drift']) > 0.005: fl.append('drift>0.005')
+        if r['free'] < 0.8: fl.append('free<0.8')
+        if not math.isfinite(r['bg']): fl.append('inf')
+        L.append('| %s | %s | %d | %s | %.4f | %.3f | %+.4f | %s |' % (n, r['src'], r['N'], '%.4f' % r['bg'] if math.isfinite(r['bg']) else 'inf', 2*r['err'], r['free'], r['drift'], ','.join(fl)))
+    open(path, 'w').write('\n'.join(L) + '\n'); return L
+
+
+if __name__ == '__main__' and len(sys.argv) > 1 and sys.argv[1] == 'full':
+    D = load(); details(D); full_table(D, os.path.join(ROOT, 'runs', 'task3_fl_table.md'))
