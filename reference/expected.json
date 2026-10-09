@@ -1,0 +1,229 @@
+{
+ "cylinders": {
+  "(2, 2, 0, -1)": {
+   "P_int4": [
+    2,
+    2,
+    0,
+    -1
+   ],
+   "absP": 3.732050807568877,
+   "absPstar": 0.26794919243112153,
+   "d0": [
+    0,
+    0,
+    1,
+    1,
+    9
+   ],
+   "n_states": 664,
+   "n_transitions": 875,
+   "s_phi0": 0.64174834604813,
+   "sum_c": 875.0,
+   "sum_w": 1419.0,
+   "argP_deg": -0.0,
+   "argPstar_deg": 0.0,
+   "x_phi0": 0.730537,
+   "chi": 0.00804,
+   "scan": "0.4 7",
+   "K": {
+    "K_alpha": 1.086,
+    "K_r": 2.334,
+    "K_i": 1.762,
+    "s0": 0.6429,
+    "rms": 0.00013
+   },
+   "reference_file": "reference/data/ref_2_2_0_-1.npz"
+  },
+  "(2, 3, 0, -1)": {
+   "P_int4": [
+    2,
+    3,
+    0,
+    -1
+   ],
+   "absP": 4.62518160134424,
+   "absPstar": 0.7795480450791594,
+   "d0": [
+    0,
+    0,
+    1,
+    1,
+    1,
+    9
+   ],
+   "n_states": 4453,
+   "n_transitions": 5827,
+   "s_phi0": 0.6157935076772837,
+   "sum_c": 5827.0,
+   "sum_w": 9641.0,
+   "argP_deg": 6.206,
+   "argPstar_deg": 140.104,
+   "x_phi0": 0.733303,
+   "chi": 0.04284,
+   "scan": "0.4 5",
+   "K": {
+    "K_alpha": 1.648,
+    "K_r": 1.35,
+    "K_i": 1.912,
+    "s0": 0.62277,
+    "rms": 0.00024
+   },
+   "reference_file": "reference/data/ref_2_3_0_-1.npz"
+  },
+  "(2, 3, 1, -1)": {
+   "P_int4": [
+    2,
+    3,
+    1,
+    -1
+   ],
+   "absP": 5.277916867529369,
+   "absPstar": 0.3789373819630116,
+   "d0": [
+    0,
+    0,
+    1,
+    1,
+    1,
+    2,
+    9
+   ],
+   "n_states": 17922,
+   "n_transitions": 23307,
+   "s_phi0": 0.6141505164863368,
+   "sum_c": 23307.0,
+   "sum_w": 38632.0,
+   "argP_deg": 15.0,
+   "argPstar_deg": -105.0,
+   "x_phi0": 0.731947,
+   "chi": 0.00765,
+   "scan": "0.4 5",
+   "K": {
+    "K_alpha": 1.786,
+    "K_r": 1.789,
+    "K_i": 1.865,
+    "s0": 0.61564,
+    "rms": 3.9e-06
+   },
+   "reference_file": "reference/data/ref_2_3_1_-1.npz"
+  },
+  "(3, 3, 0, -1)": {
+   "P_int4": [
+    3,
+    3,
+    0,
+    -1
+   ],
+   "absP": 5.620360955323056,
+   "absPstar": 0.6415159638544508,
+   "d0": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    9
+   ],
+   "n_states": 42985,
+   "n_transitions": 55645,
+   "s_phi0": 0.6099153047754002,
+   "sum_c": 55645.0,
+   "sum_w": 92107.0,
+   "argP_deg": 5.104,
+   "argPstar_deg": 51.206,
+   "x_phi0": 0.731032,
+   "chi": 0.02087,
+   "scan": "0.3 4",
+   "K": {
+    "K_alpha": 1.55,
+    "K_r": 1.747,
+    "K_i": 1.91,
+    "s0": 0.6134,
+    "rms": 3.2e-05
+   },
+   "reference_file": "reference/data/ref_3_3_0_-1.npz"
+  },
+  "(3, 4, 0, -2)": {
+   "P_int4": [
+    3,
+    4,
+    0,
+    -2
+   ],
+   "absP": 6.464101615137754,
+   "absPstar": 0.46410161513775694,
+   "d0": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    9,
+    9
+   ],
+   "n_states": 174607,
+   "n_transitions": 221788,
+   "s_phi0": 0.606711,
+   "sum_c": 221788.0,
+   "sum_w": 363130.0,
+   "argP_deg": -0.0,
+   "argPstar_deg": 180.0,
+   "x_phi0": 0.732499,
+   "chi": 0.00806,
+   "scan": "0.3 3",
+   "K": {
+    "K_alpha": 1.903,
+    "K_r": 1.568,
+    "K_i": 1.693,
+    "s0": 0.60812,
+    "rms": 3.4e-06
+   },
+   "reference_file": "reference/data/ref_3_4_0_-2.npz"
+  }
+ },
+ "targets": {
+  "(3, 4, 1, -1)": {
+   "P_int4": [
+    3,
+    4,
+    1,
+    -1
+   ],
+   "absP": 7.209768520107505,
+   "absPstar": 0.13870070824203043,
+   "g": 0.01923788646684072,
+   "argP_deg": 15.0,
+   "estimated_states": "~7e5-1e6",
+   "purpose": "main target: |g|=0.019, same 15deg orientation as (2,3,1,-1)"
+  },
+  "(4, 4, 0, -2)": {
+   "P_int4": [
+    4,
+    4,
+    0,
+    -2
+   ],
+   "absP": 7.464101615137754,
+   "absPstar": 0.5358983848622431,
+   "g": 0.07179676972449052,
+   "argP_deg": -0.0,
+   "estimated_states": "~1.2e6",
+   "purpose": "2*lambda, real axis series with (2,2,0,-1),(3,4,0,-2)"
+  }
+ },
+ "region_counts": {
+  "triangle": 1,
+  "rhombus": 1,
+  "inflated_triangle": 20,
+  "inflated_rhombus": 23,
+  "dodecagon_side1": 5827,
+  "dodecagon_pair_DD": 38120461,
+  "dodecagon_plus_triangle_DT": 6865,
+  "DDT_cluster": 61174241
+ },
+ "notes": "s, x per vertex at zero tilt field; chi = dx/dln(mu) (chi.py, h=0.05 five-point); K from tiltscan.py <file> <range> <n> then kfit.py; units k_B per unit tile-edge^2 area"
+}

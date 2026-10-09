@@ -1,0 +1,15 @@
+# build outputs
+tm_cpp/build/
+*.o
+*.out
+# large run outputs (keep only reproduction commands in results*.md)
+runs/*
+!runs/.gitkeep
+*_scan.npy
+# python caches / intermediate pickles from analysis scripts
+__pycache__/
+*.pyc
+*.pkl
+analysis/*.npz
+analysis/*.npy
+# NOTE: reference/data/*.npz IS tracked (validation baseline, ~1.4 MB)
