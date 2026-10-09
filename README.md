@@ -28,6 +28,7 @@ TASK2.md           의뢰 2: 3.12.12 꼭짓점 환경(DDDT) 결합 방식 전수
 TASK1b.md          의뢰 1b: 강성 대칭 재해석 (K̄, ΔK, δ), δ 상한 — 기존 자료 재분석 → results03.md
 TASK2b.md          의뢰 2b: DDDT 협동 방식 재정의, 진짜 협동 비율 → results04.md
 TASK3.md           의뢰 3: 상도 예측의 시뮬레이션 검증 (무작위 타일링 대 B) → results05.md
+sim/               의뢰 3 엔진(a083b4d 복사 + 5827 채우기·이동 0·12각형 재채우기·FL --kind file), 테스트 20개. 보고: results05.md, figures/phase_diagram_sim.png
 data/              의뢰 3 입력: dodecagon_fillings_5827.npz (정12각형 채우기 5827개), local_moves_4tile.json (4-타일 국소 이동 2종)
 tm_cpp/            C++ 전달 행렬 생성기 (results01 브랜치)
 reference/         검증 기준 (수정 금지): Python 참조 구현, 기준 전달 행렬, expected.json

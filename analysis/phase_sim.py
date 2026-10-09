@@ -69,6 +69,10 @@ for T in (0.06, 0.08):
         elif dA is not None and dA['D'] > 2*dA['err']: c, lab = '#2ca02c', 'A wins'
         else: c, lab = '#cccccc', 'undecided (2 sigma)'
         ax.plot(p, T, 'o', ms=9, mfc=c, mec='k', label=lab if lab not in shown else None); shown.add(lab)
+for p in sorted({r['P'] for r in D.values() if abs(r['T']-0.06) < 1e-9}):
+    if not d_tx('B', p, 0.06, 1600):
+        dA = d_tx('A', p, 0.06, 1600)
+        if dA: ax.plot(p, 0.06, 'o', ms=9, mfc='white', mec='#1f77b4', label='tiling beats A (B not computed)')
 ax.plot(Pst, 0, 'k*', ms=11); ax.set_xlim(0.62, 0.82); ax.set_ylim(0, 0.1); ax.set_xlabel('P'); ax.set_ylabel('T'); ax.set_title('lambda = 1.93: random tiling vs A, B (Frenkel-Ladd)')
-ax.legend(fontsize=7, loc='upper right'); plt.tight_layout(); plt.savefig(os.path.join(ROOT, 'figures', 'phase_diagram_sim.png'), dpi=130)
+ax.legend(fontsize=7, loc='lower right'); plt.tight_layout(); plt.savefig(os.path.join(ROOT, 'figures', 'phase_diagram_sim.png'), dpi=130)
 open(os.path.join(ROOT, 'runs', 'phase_sim.txt'), 'w').write('\n'.join(lines) + '\n')
