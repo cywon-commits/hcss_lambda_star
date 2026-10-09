@@ -13,3 +13,4 @@ __pycache__/
 analysis/*.npz
 analysis/*.npy
 # NOTE: reference/data/*.npz IS tracked (validation baseline, ~1.4 MB)
+tm_cpp/tm_gen
