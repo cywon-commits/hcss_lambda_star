@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from multiprocessing import Pool
 import analyze_cyl
 def job(t):
-    a, key, err = t; r = analyze_cyl.analyze(a); r['phase'] = key; r['err'] = err; return r
+    a, key, err = t; r = analyze_cyl.analyze(a, max_states=10_000_000); r['phase'] = key; r['err'] = err; return r
 if __name__ == '__main__':
     c, out, npr, per, Wmax = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), float(sys.argv[5])
     by = collections.defaultdict(list)

@@ -22,13 +22,14 @@ def stats(f, a, margin=0):
             ap = round(math.degrees(math.atan2((pv - p).imag, (pv - p).real)) / 20) * 20 % 360
             vk = tuple(v[i] - math.floor((cx(v[i]) * ph.conjugate()).real / abs(P)) * a)
             corners[vk].append((an, (ap - an) % 360, cen.imag * ph.real - cen.real * ph.imag))
-    types = collections.Counter(); arr = collections.Counter(); bad = 0; vort = collections.Counter()
+    types = collections.Counter(); arr = collections.Counter(); bad = 0; vort = collections.Counter(); vpos = []
     for vk, cs in corners.items():
         cs.sort(); tot = sum(w for _, w, _ in cs)
         if tot != 360: continue
         if any((cs[(i + 1) % len(cs)][0] - cs[i][0]) % 360 != cs[i][1] for i in range(len(cs))): bad += 1; continue
         t = sum(w == 60 for _, w, _ in cs); aa = sum(w == 80 for _, w, _ in cs); oo = sum(w == 100 for _, w, _ in cs)
         types[(t, aa, oo)] += 1
+        if (t, aa, oo) in ((1, 0, 3), (2, 3, 0)): vpos.append((complex(cx(np.array(vk))), 1 if (t, aa, oo) == (2, 3, 0) else -1))
         if (t, aa, oo) == (0, 2, 2):
             ws = [w for _, w, _ in cs]; arr['aooa' if any(ws[i] == ws[(i + 1) % 4] for i in range(4)) is False else 'aaoo'] += 1
     N = sum(types.values()); lab = np.array(labs)
@@ -36,7 +37,7 @@ def stats(f, a, margin=0):
                frac={'%d%d%d' % k: v / N for k, v in sorted(types.items())}, aaoo=arr['aaoo'], aoao=arr['aooa'],
                vort_pos=types[(2, 3, 0)], vort_neg=types[(1, 0, 3)], vort_density=(types[(2, 3, 0)] + types[(1, 0, 3)]) / N,
                Mrh=float(abs(np.exp(2j * np.pi * lab / 3).sum()) / len(lab)) if len(lab) else None, rh_labels=np.bincount(lab, minlength=3).tolist(),
-               tri_fam=[ntri[i] for i in range(3)])
+               tri_fam=[ntri[i] for i in range(3)], vortex_positions=vpos)
     return out
 if __name__ == '__main__':
-    print(json.dumps(stats(sys.argv[1], [int(x) for x in sys.argv[2:8]]), indent=1))
+    r = stats(sys.argv[1], [int(x) for x in sys.argv[2:8]]); r.pop('vortex_positions'); print(json.dumps(r, indent=1))
