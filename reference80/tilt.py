@@ -98,7 +98,7 @@ def sccs(D):
     return out, lab
 def restrict(D, nodes):
     idx = -np.ones(D['n'], int); idx[nodes] = np.arange(len(nodes)); m = (idx[D['fr']] >= 0) & (idx[D['to']] >= 0)
-    E = dict(fr=idx[D['fr'][m]], to=idx[D['to'][m]], c=D['c'][m], w=D['w'][m], ar=D['ar'][m], n=len(nodes), P=D['P'], Pss=D['Pss'],
+    E = dict(na=None if D.get('na') is None else D['na'][m], fr=idx[D['fr'][m]], to=idx[D['to'][m]], c=D['c'][m], w=D['w'][m], ar=D['ar'][m], n=len(nodes), P=D['P'], Pss=D['Pss'],
              qs=[q[m] for q in D['qs']], cls=None if D.get('cls') is None else D['cls'][m])
     return E
 def solve_sccs(D, phis=None, maxscc=12):

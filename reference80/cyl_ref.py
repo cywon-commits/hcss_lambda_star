@@ -65,7 +65,9 @@ def build(Pv, d0):
                 if C.name == 'z18': cls = tuple(x + y for x, y in zip(cls, vv))
             if c == 0: continue
             if f not in states: states[f] = len(order); order.append(f)
-            if C.name == 'lam12':
+            if C.name == 'st12':
+                na = (1 if t == 'T' else 0) + sum(int(round((area(list(hh)) - fill_count(hh)[1]) / (math.sqrt(3) / 4 - 0.5))) for hh in holes)
+            elif C.name == 'lam12':
                 na = (1 if t == 'A' else 0) + sum(int(round((area(list(hh)) - fill_count(hh)[1] / 2) / ((math.sqrt(3) - 1) / 4))) for hh in holes)
             else:
                 na = sum(cls[:3])
@@ -89,7 +91,7 @@ def main():
         dperp = np.array([star(tuple(o), m) for o in off]); Ps = star(Pv, m)
         qs.append(dperp - (a_ / abs(Pc)) * Ps); Pss.append(Ps)
     kw = dict(fr=fr, to=to, c=c, w=w, ar=ar, na=na, n=len(order), P=Pc, d0=np.array(d0), off=off)
-    if C.name == 'lam12': kw.update(q=qs[0], Ps=Pss[0])
+    if C.name in ('lam12', 'st12'): kw.update(q=qs[0], Ps=Pss[0])
     else: kw.update(q5=qs[0], q7=qs[1], Ps5=Pss[0], Ps7=Pss[1], cls=np.array(cls))
     np.savez_compressed(outp, **kw)
     print('saved', a, len(order), '%.0fs' % (time.time() - t0), 'violations', len(VIOLATIONS), 'area mismatches', len(AREA_MISMATCH), flush=True)

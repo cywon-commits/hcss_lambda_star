@@ -11,6 +11,9 @@ _DEF = {
     'z18': dict(n=18, r=6, red=(-1, 0, 0, 1, 0, 0),                  # zeta^6 = zeta^3 - 1
                 tiles=(('T', (0, 6, 12), 3), ('R80', (0, 4, 9, 13), 4), ('R100', (0, 5, 9, 14), 5)),
                 vw={'T': 0.5, 'R80': 1.0, 'R100': 1.0}, area={'T': math.sqrt(3)/4, 'R80': math.sin(math.radians(80)), 'R100': math.sin(math.radians(80))}, perp=(5, 7)),
+    'st12': dict(n=12, r=4, red=(-1, 0, 1, 0),                       # square-triangle tiling in Z[zeta12] (zeta^4 = zeta^2 - 1)
+                 tiles=(('T', (0, 4, 8), 2), ('S', (0, 3, 6, 9), 3)),
+                 vw={'T': 0.5, 'S': 1.0}, area={'T': math.sqrt(3)/4, 'S': 1.0}, perp=(5,)),
 }
 name = None
 HOOKS = []          # callables run after every select() (caches of dependent modules register their cache_clear here)
