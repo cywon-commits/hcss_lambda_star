@@ -1,0 +1,262 @@
+[
+ {
+  "file": "runs/samp/r150_1.npz",
+  "a": [
+   5,
+   1,
+   1,
+   0,
+   0,
+   0
+  ],
+  "tiles": 20000,
+  "families_used": 3,
+  "edge_counts": [
+   43953,
+   4004,
+   20061
+  ],
+  "labels_used": 3,
+  "label_counts": [
+   1004,
+   6016,
+   998
+  ],
+  "vortices": 1992,
+  "vertices": 14000
+ },
+ {
+  "file": "runs/samp/r150_2.npz",
+  "a": [
+   5,
+   1,
+   1,
+   0,
+   0,
+   0
+  ],
+  "tiles": 20000,
+  "families_used": 3,
+  "edge_counts": [
+   43658,
+   4018,
+   20450
+  ],
+  "labels_used": 3,
+  "label_counts": [
+   1027,
+   6117,
+   982
+  ],
+  "vortices": 2028,
+  "vertices": 14055
+ },
+ {
+  "file": "runs/samp/r180_1.npz",
+  "a": [
+   0,
+   3,
+   4,
+   0,
+   -1,
+   -1
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   0,
+   33705,
+   33447
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   7152,
+   0,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13568
+ },
+ {
+  "file": "runs/samp/r180_2.npz",
+  "a": [
+   0,
+   3,
+   4,
+   0,
+   -1,
+   -1
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   0,
+   33599,
+   33548
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   7147,
+   0,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13566
+ },
+ {
+  "file": "runs/samp/r231_1.npz",
+  "a": [
+   4,
+   0,
+   5,
+   0,
+   0,
+   -3
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   29910,
+   0,
+   36123
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   0,
+   6033,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13006
+ },
+ {
+  "file": "runs/samp/r231_2.npz",
+  "a": [
+   4,
+   0,
+   5,
+   0,
+   0,
+   -3
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   30670,
+   0,
+   35377
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   0,
+   6047,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13013
+ },
+ {
+  "file": "runs/samp/pp1_1.npz",
+  "a": [
+   4,
+   0,
+   4,
+   1,
+   0,
+   -3
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   41938,
+   0,
+   24268
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   0,
+   6206,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13093
+ },
+ {
+  "file": "runs/samp/pp1_2.npz",
+  "a": [
+   4,
+   0,
+   4,
+   1,
+   0,
+   -3
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   41718,
+   0,
+   24498
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   0,
+   6216,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13098
+ },
+ {
+  "file": "runs/samp/pp2_1.npz",
+  "a": [
+   5,
+   0,
+   5,
+   1,
+   0,
+   -4
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   41954,
+   0,
+   24338
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   0,
+   6292,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13135
+ },
+ {
+  "file": "runs/samp/pp2_2.npz",
+  "a": [
+   5,
+   0,
+   5,
+   1,
+   0,
+   -4
+  ],
+  "tiles": 20000,
+  "families_used": 2,
+  "edge_counts": [
+   42490,
+   0,
+   23776
+  ],
+  "labels_used": 1,
+  "label_counts": [
+   0,
+   6266,
+   0
+  ],
+  "vortices": 0,
+  "vertices": 13122
+ }
+]
